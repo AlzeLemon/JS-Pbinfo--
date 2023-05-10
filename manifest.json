@@ -1,0 +1,27 @@
+{
+
+  "manifest_version": 2,
+  "name": "Pbinfo++",
+  "version": "1.0",
+  
+  "description": "Pbinfo++",
+  
+  "content_scripts": [
+    {
+      "matches": ["*://*.pbinfo.ro/*"],
+      "js": ["main.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.pbinfo.ro/probleme/*"],
+      "js": ["rust.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.chatgptproxy.me/*"],
+      "js": ["hijack.js"],
+      "run_at": "document_end"
+    }
+  ]
+
+}
