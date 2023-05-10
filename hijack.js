@@ -28,11 +28,11 @@ function waitOneSecond() {
     });
 }
 
-async function heart() {
+async function heart(sesid) {
     json = {
         data: { 
             user_fake_id: "yixv0lcs6vk6anpv", 
-            session_id: "59oqpi5z9uxti9l1" }
+            session_id: sesid }
     };
     let res = await fetch(url, {
         method: 'POST',
@@ -43,11 +43,11 @@ async function heart() {
     let text2 = JSON.parse(text1);
     console.log(text2);
 }
-async function conversation() {
+async function conversation(sesid) {
     json = {
         data: { 
             parent_id: "0",
-            session_id: "59oqpi5z9uxti9l1" ,
+            session_id: sesid ,
             question: "What are you up to",
             user_fake_id: "yixv0lcs6vk6anpv"
         }
@@ -70,19 +70,57 @@ async function conversation() {
 
     return text2.resp_data.chat_id;
 }
-function result() {
+async function result(cid , sesid) {
+    json = {
+        data: { 
+            chat_id: cid,
+            user_fake_id: "yixv0lcs6vk6anpv",
+            session_id: sesid
+        }
+    };
+    let res = await fetch(url2, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(json)
+    })
+    let text1 = await res.text();
+    let text2 = JSON.parse(text1);
 
+    return text2.resp_data;
 }
 async function RustCompile(code) {
-    heart();
-    let convo = conversation();
-    if(convo!=null){
-
+    ssid = makeid(16);
+    heart(ssid);
+    let convo = conversation(ssid);
+    if(false ){
+        //TODO: error
     }
     else{
-        
+        while(true){
+            let resres = await result(convo,ssid);
+            console.log("bruh");
+            if(resres!=null){
+                console.log(resres.answer);
+                if(resres.status == 3){
+                    break;
+                }
+            }
+            await waitOneSecond();
+        }
     }
     return "gotit";
+}
+
+function makeid(length) {
+    let result = '';
+    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < length) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      counter += 1;
+    }
+    return result;
 }
 
 //code starts here
@@ -97,4 +135,4 @@ window.addEventListener(
     },
     false
 );
-conversation();
+RustCompile("i like niggers");
