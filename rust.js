@@ -1,7 +1,7 @@
 //creates the rust option on pbinfo
 const selectElement = document.querySelector('select[name="limbaj_de_programare"]#limbaj_de_programare');
 const optionElement = document.createElement('option');
-optionElement.value = 'rust';
+optionElement.value = 'rs';
 optionElement.textContent = 'Rust 🦀';
 selectElement.appendChild(optionElement);
 
@@ -18,7 +18,7 @@ async function CompileRust(){
     let childwindow = window.open('https://chatgptproxy.me/#/');
     await waitOneSecond();
     let code = ta[0].value;
-    let str = String.prototype.concat('Translate this code into C++ without any additional text such as explanations or notes:\n', code );
+    let str = String.prototype.concat('You are not allowed to use functions like stoi you must read varabiles as their intended type.Translate this code into C++ without any additional text such as explanations or notes:\n', code );
     childwindow.postMessage(str,"*");
 }
 console.log("a");

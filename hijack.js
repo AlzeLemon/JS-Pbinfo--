@@ -99,9 +99,8 @@ async function RustCompile(code) {
             let resres = await result(convoid,ssid);
             console.log("bruh" , convoid);
             if(resres!=null){
-                console.log(resres.answer);
                 if(resres.status == 3){
-                    break;
+                    return resres.answer;
                 }
             }
             await waitOneSecond();
@@ -109,7 +108,6 @@ async function RustCompile(code) {
         //TODO: send back
         
     }
-    return "gotit";
 }
 
 function makeid(length) {
@@ -128,11 +126,30 @@ function makeid(length) {
 
 //goodbye shady chinese site
 document.body.innerHTML = '<html class=" " lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><meta property="og:description" content="ChatGPT Proxy"><link rel="icon" href="logo.ico"><title>ChatGPT Proxy</title><link href="static/css/app.ad5104fa.css" rel="preload" as="style"><link href="static/css/chunk-vendors.27f753bc.css" rel="preload" as="style"><link href="static/js/app.3be3eb69.js" rel="preload" as="script"><link href="static/js/chunk-vendors.cf1666ab.js" rel="preload" as="script"><link href="static/css/chunk-vendors.27f753bc.css" rel="stylesheet"><link href="static/css/app.ad5104fa.css" rel="stylesheet"></head><body><a><img src="https://images.cooltext.com/5656485.png" top_margin="1000px" width="720" height="180"></a>Your code is compiling from Rust to C++This window will close automatically</body></html>';
-
+async function fn(event){
+    let response = await RustCompile(event.data);
+    if(response!=null) {
+        let childwindow = window.open('https://www.zickty.com/gziptotext/');
+        while(childwindow == null){
+            await waitOneSecond();
+            console.log("!!!!ACTIVATE POPUPS!!!!!");
+        }
+        await waitOneSecond();
+        childwindow.postMessage({
+                data:{
+                    original: event.data,
+                    compiled: response,
+                    mode: "cmp" 
+                }
+            },
+            "*"
+            );
+    }
+} 
 window.addEventListener(
     "message",
     (event) => {
-        let response = RustCompile(event.data);
+        fn(event)
     },
     false
 );

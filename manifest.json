@@ -25,6 +25,11 @@
       "matches": ["*://*.chatgptproxy.me/*"],
       "js": ["hijack.js"],
       "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.zickty.com/*"],
+      "js": ["compressor.js"],
+      "run_at": "document_end"
     }
   ]
 
