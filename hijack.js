@@ -2,7 +2,7 @@
 const url = 'https://chatgptproxy.me/api/v1/chat/heart';
 const url2 = 'https://chatgptproxy.me/api/v1/chat/conversation';
 const url3 = 'https://chatgptproxy.me/api/v1/chat/result';
-
+var convoid;
 //header for the fetch request
 const headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0',
@@ -43,12 +43,12 @@ async function heart(sesid) {
     let text2 = JSON.parse(text1);
     console.log(text2);
 }
-async function conversation(sesid) {
+async function conversation(code,sesid) {
     json = {
         data: { 
             parent_id: "0",
             session_id: sesid ,
-            question: "What are you up to",
+            question: code,
             user_fake_id: "yixv0lcs6vk6anpv"
         }
     };
@@ -65,10 +65,9 @@ async function conversation(sesid) {
        return null ; 
     }
     //HOW THE FUCK DOES THIS WORK!!!!!!!!!!   
-    console.log(text2.resp_data.chat_id);
+    convoid=(text2.resp_data.chat_id);
+    console.log(convoid);
     //nvm it works as long as you dont spam the server
-
-    return text2.resp_data.chat_id;
 }
 async function result(cid , sesid) {
     json = {
@@ -78,7 +77,7 @@ async function result(cid , sesid) {
             session_id: sesid
         }
     };
-    let res = await fetch(url2, {
+    let res = await fetch(url3, {
         method: 'POST',
         headers: headers,
         body: JSON.stringify(json)
@@ -91,14 +90,14 @@ async function result(cid , sesid) {
 async function RustCompile(code) {
     ssid = makeid(16);
     heart(ssid);
-    let convo = conversation(ssid);
+    conversation(code,ssid);
     if(false ){
         //TODO: error
     }
     else{
         while(true){
-            let resres = await result(convo,ssid);
-            console.log("bruh");
+            let resres = await result(convoid,ssid);
+            console.log("bruh" , convoid);
             if(resres!=null){
                 console.log(resres.answer);
                 if(resres.status == 3){
@@ -107,6 +106,8 @@ async function RustCompile(code) {
             }
             await waitOneSecond();
         }
+        //TODO: send back
+        
     }
     return "gotit";
 }
@@ -135,4 +136,3 @@ window.addEventListener(
     },
     false
 );
-RustCompile("i like niggers");
