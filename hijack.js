@@ -144,6 +144,10 @@ async function fn(event){
             },
             "*"
             );
+        while(childwindow.closed==false){
+            await waitOneSecond();
+        }
+        window.close();
     }
 } 
 window.addEventListener(

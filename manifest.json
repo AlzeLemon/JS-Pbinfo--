@@ -3,7 +3,7 @@
   "manifest_version": 2,
   "name": "Pbinfo++",
   "version": "1.0",
-
+  "permissions": ["cookies" , "webRequest"],
   "browser_action": {
     "default_title": "Pbinfo++",
     "default_icon": "images/ext_logo.png"
@@ -17,8 +17,13 @@
       "run_at": "document_end"
     },
     {
-      "matches": ["*://*.pbinfo.ro/probleme/*"],
-      "js": ["rust.js"],
+      "matches": ["*://*.pbinfo.ro/*"],
+      "css": ["main.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.pbinfo.ro/*"],
+      "js": ["autologin.js"],
       "run_at": "document_end"
     },
     {
@@ -27,8 +32,8 @@
       "run_at": "document_end"
     },
     {
-      "matches": ["*://*.zickty.com/*"],
-      "js": ["compressor.js"],
+      "matches": ["*://*.pbinfo.ro/ajutor"],
+      "js": ["storage.js"],
       "run_at": "document_end"
     }
   ]

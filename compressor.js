@@ -16,7 +16,26 @@ async function fn(event){
             bu[1].click();
             await waitOneSecond();
             let answer = String.prototype.concat("//Written in Rust\n//",ta[0].value,"\n\n\n",event.data.data.compiled);
-            ta[1].value = answer;
+            let childwindow = window.open('https://www.pbinfo.ro/ajutor');
+            await waitOneSecond();
+            await waitOneSecond();
+            await waitOneSecond();
+            childwindow.postMessage({
+                data:{
+                    key: "cmp",
+                    value: answer,
+                    mode: "autoclose" 
+                },
+                
+            },
+            "*"
+            
+            );
+            while(childwindow.closed==false){
+                await waitOneSecond();
+            }
+            window.close();
+            
             break;
         }
     }
@@ -28,4 +47,4 @@ window.addEventListener(
         fn(event);
     },
     false
-);
+);      
