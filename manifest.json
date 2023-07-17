@@ -22,6 +22,16 @@
       "run_at": "document_start"
     },
     {
+      "matches": ["*://*.pbinfo.ro/profil/*"],
+      "js": ["profil.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.pbinfo.ro/probleme/*"],
+      "js": ["pagina_probleme.js"],
+      "run_at": "document_end"
+    },
+    {
       "matches": ["*://*.pbinfo.ro/*"],
       "js": ["autologin.js"],
       "run_at": "document_end"
